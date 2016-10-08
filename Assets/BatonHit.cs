@@ -12,7 +12,6 @@ public class BatonHit : MonoBehaviour {
 
         highlightMaterial = new Material(this.GetComponent<MeshRenderer>().material);
         GetComponent<MeshRenderer>().material = highlightMaterial;
-        StartCoroutine(HighlightBeats());
 
 	}
 	
@@ -31,24 +30,25 @@ public class BatonHit : MonoBehaviour {
         }
     }
 
-    public IEnumerator ColorHit() {
+    public IEnumerator FlashColor(Color hitColor) {
 
-        highlightMaterial.SetColor("_Color", Color.green);
+        if(highlightMaterial != null) {
 
-        yield return new WaitForSeconds(hitColorDelay);
+            Color prevColor = highlightMaterial.color;
 
-        highlightMaterial.SetColor("_Color", Color.white);
+            highlightMaterial.SetColor("_Color", hitColor);
 
-    }
+            yield return new WaitForSeconds(hitColorDelay);
 
-    public IEnumerator HighlightBeats() {
-
-        while (true) {
-
-            StartCoroutine(ColorHit());
-
-            yield return new WaitForSeconds(60.0f / SongDriver.instance.activeSong.bpm);
-
+            highlightMaterial.SetColor("_Color", prevColor);
         }
+
     }
+
+    public void ColorHit(Color hitColor) {
+
+        StartCoroutine(FlashColor(hitColor));
+
+    }
+
 }
