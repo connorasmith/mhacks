@@ -14,11 +14,17 @@ public class BatonHit : MonoBehaviour {
 
     public int timesHit = 0;
 
-	// Use this for initialization
-	void Start () {
+    void Awake() {
 
         highlightMaterial = new Material(this.GetComponent<MeshRenderer>().material);
         GetComponent<MeshRenderer>().material = highlightMaterial;
+
+
+    }
+
+    // Use this for initialization
+    void Start () {
+
 
 	}
 	
@@ -32,15 +38,18 @@ public class BatonHit : MonoBehaviour {
 
         if (other.GetComponent<Baton>()) {
 
+            if(waiting) {
+
+                Debug.LogWarning("TOUCHED!");
+                touched = true;
+
+            }
+
             SongDriver.instance.BeatHit();
 
         }
 
-        if (waiting) {
 
-            touched = true;
-
-        }
 
         timesHit++;
     }
@@ -71,7 +80,7 @@ public class BatonHit : MonoBehaviour {
 
         Color prevColor = highlightMaterial.color;
         highlightMaterial.SetColor("_Color", panelColor);
-
+        Debug.LogWarning("PANEL COLOR IS: " + panelColor);
 
         while(!touched) {
 

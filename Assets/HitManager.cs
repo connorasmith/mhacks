@@ -31,12 +31,16 @@ public class HitManager : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         beatsPerMeasure = SongDriver.instance.activeSong.beatsInMeasure;
         //StartCoroutine(highlightBeats());
-        StartCoroutine(tutorialSequence());
+
+
         bottom.panelColor = Color.green;
         center.panelColor = Color.magenta;
         left.panelColor = Color.blue;
         right.panelColor = Color.red;
         top.panelColor = Color.yellow;
+
+        StartCoroutine(tutorialSequence());
+
     }
 
     // Update is called once per frame
