@@ -82,7 +82,6 @@ public class SongDriver : MonoBehaviour {
     public void BeatHit() {
 
         UpdateSongPitchByBPM();
-
         StartNewBeat();
 
     }
@@ -97,16 +96,10 @@ public class SongDriver : MonoBehaviour {
             // If at any point the player's BPM is slower (i.e. they missed a hit)
             if(activeBPM < actualBPM) {
 
-                UpdateSongPitchByBPM();
+                storedBeats.Dequeue();
+                storedBeats.Enqueue(activeBPM);
 
                 yield return new WaitForSeconds(3.0f);
-
-                if(activeBPM < actualBPM) {
-
-                    storedBeats.Dequeue();
-                    storedBeats.Enqueue(activeBPM);
-
-                }
 
             }
 
@@ -115,8 +108,6 @@ public class SongDriver : MonoBehaviour {
     }
 
     public void UpdateSongPitchByBPM() {
-
-        activeBPM = 60.0f / timeSinceLastHit;
 
         float averageBPM = GetAverageBPM();
 
@@ -156,9 +147,7 @@ public class SongDriver : MonoBehaviour {
 
         }
 
-        totalBPM += activeBPM;
-
-        totalBPM /= (numberOfBeatsToAverageAcross + 1);
+        totalBPM /= (numberOfBeatsToAverageAcross);
 
         return totalBPM;
 
