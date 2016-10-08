@@ -4,6 +4,7 @@ using System.Collections;
 public class BatonHit : MonoBehaviour {
 
     private Material highlightMaterial;
+    public bool isBottom;
 
     private float hitColorDelay = 0.1f;
 
@@ -23,7 +24,7 @@ public class BatonHit : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other) {
 
-        if (other.GetComponent<Baton>()) {
+        if (other.GetComponent<Baton>() && isBottom) {
 
             SongDriver.instance.BeatHit();
 
