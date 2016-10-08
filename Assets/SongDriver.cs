@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class SongDriver : MonoBehaviour {
@@ -21,7 +22,11 @@ public class SongDriver : MonoBehaviour {
 
     public Song[] songs;
 
-    private Song activeSong;
+    public Song activeSong;
+
+    public Text bpmText;
+
+    private const string statusString = "Your BPM: {0}\n Target BPM: {1}\n Relative Speed: x{2}";
 
     private AudioSource source;
 
@@ -34,7 +39,6 @@ public class SongDriver : MonoBehaviour {
         if (SongDriver.instance == null) {
             SongDriver.instance = this;
         }
-
     }
 
 	// Use this for initialization
@@ -51,6 +55,8 @@ public class SongDriver : MonoBehaviour {
             storedBeats.Enqueue(activeSong.bpm);
 
         }
+
+        StartCoroutine(checkMissedBeats());
     }
 
     // Update is called once per frame
@@ -59,20 +65,18 @@ public class SongDriver : MonoBehaviour {
         // Calculate time passed since the last baton hit.
         timeSinceLastHit += Time.deltaTime;
 
-        // This is the player's current active BPM.
-        // Note: Between hits, this will be very high.
         activeBPM = 60.0f / timeSinceLastHit;
 
-        // THis is what the song's BPM SHOULD be.
-        float actualBPM = activeSong.bpm;
-
-        // If at any point the player's BPM is slower (i.e. they missed a hit)
-        if(activeBPM < actualBPM) {
-
-            UpdateSongPitchByBPM();
-
-        }
+        UpdateText();
 	}
+
+    public void UpdateText() {
+
+        string updatedString = string.Format(statusString, (int)GetAverageBPM(), activeSong.bpm, GetBPMRatio());
+        bpmText.text = updatedString;
+
+
+    }
 
     // When the player hits, force set the last bpm
     public void BeatHit() {
@@ -81,6 +85,31 @@ public class SongDriver : MonoBehaviour {
 
         StartNewBeat();
 
+    }
+
+    public IEnumerator checkMissedBeats() {
+
+        while(true) {
+
+            // THis is what the song's BPM SHOULD be.
+            float actualBPM = activeSong.bpm;
+
+            // If at any point the player's BPM is slower (i.e. they missed a hit)
+            if(activeBPM < actualBPM) {
+
+                UpdateSongPitchByBPM();
+
+                yield return new WaitForSeconds(3.0f);
+
+                if(activeBPM < actualBPM) {
+
+                    storedBeats.Dequeue();
+                    storedBeats.Enqueue(activeBPM);
+
+                }
+
+            }
+        }
     }
 
     public void UpdateSongPitchByBPM() {
@@ -106,7 +135,7 @@ public class SongDriver : MonoBehaviour {
     public float GetBPMRatio() {
 
         // Calculate player BPM on the hit
-        float playerBPM = 60.0f / timeSinceLastHit;
+        float playerBPM = GetAverageBPM();
         float actualBPM = activeSong.bpm;
 
         float bpmRatio = playerBPM / actualBPM;
