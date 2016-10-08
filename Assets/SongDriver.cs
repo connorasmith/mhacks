@@ -109,6 +109,8 @@ public class SongDriver : MonoBehaviour {
                 }
 
             }
+
+            yield return null;
         }
     }
 
