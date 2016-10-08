@@ -16,6 +16,8 @@ public class BatonHit : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other) {
 
+		Debug.Log ("TRIGG");
+
         if (other.GetComponent<Baton>()) {
 
             SongDriver.instance.BeatHit();

@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.24648565, g: 0.2823304, b: 0.34567446, a: 1}
+  m_IndirectSpecularColor: {r: 0.18053626, g: 0.2260185, b: 0.30718803, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -120,11 +120,11 @@ Transform:
   m_GameObject: {fileID: 499580191}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.267, z: 0.65567756}
-  m_LocalScale: {x: 0.10826351, y: 0.30417493, z: 0.3041748}
+  m_LocalScale: {x: 0.10826357, y: 0.30417505, z: 0.3041748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_Children: []
-  m_Father: {fileID: 470474135}
-  m_RootOrder: 5
+  m_Father: {fileID: 710220684}
+  m_RootOrder: 2
 --- !u!23 &499580193
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -227,7 +227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 969b0811b31186f4f9822cc80c6bb092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfBeatsToAverageAcross: 0
   songs:
   - songName: Jupiter
     songAudio: {fileID: 8300000, guid: 668076e33b86be948a53e036b088fb75, type: 3}
@@ -243,7 +242,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1360a3b4371b3474e969c7f9360a3e48, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 668076e33b86be948a53e036b088fb75, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 0.4
@@ -308,6 +307,38 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!1 &710220683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 710220684}
+  m_Layer: 0
+  m_Name: Hits
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &710220684
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 710220683}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 1308592250}
+  - {fileID: 1796293652}
+  - {fileID: 499580192}
+  - {fileID: 1045167900}
+  m_Father: {fileID: 470474135}
+  m_RootOrder: 0
 --- !u!4 &714583832 stripped
 Transform:
   m_PrefabParentObject: {fileID: 402434, guid: 4d293c8e162f3874b982baadd71153d2, type: 2}
@@ -417,14 +448,26 @@ Prefab:
     - target: {fileID: 3380982, guid: 4d293c8e162f3874b982baadd71153d2, type: 2}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 2052207437}
+      objectReference: {fileID: 2131298376}
     - target: {fileID: 2348914, guid: 4d293c8e162f3874b982baadd71153d2, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1884598284}
+      objectReference: {fileID: 1491278961}
     - target: {fileID: 146900, guid: 4d293c8e162f3874b982baadd71153d2, type: 2}
       propertyPath: m_Name
       value: '[CameraRig] (1)'
+      objectReference: {fileID: 0}
+    - target: {fileID: 408470, guid: 4d293c8e162f3874b982baadd71153d2, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 458974, guid: 4d293c8e162f3874b982baadd71153d2, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 402434, guid: 4d293c8e162f3874b982baadd71153d2, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11420968, guid: 4d293c8e162f3874b982baadd71153d2, type: 2}
@@ -457,11 +500,11 @@ Transform:
   m_GameObject: {fileID: 1045167899}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.267, z: 0.65567756}
-  m_LocalScale: {x: 0.1082636, y: 0.3041751, z: 0.3041748}
+  m_LocalScale: {x: 0.10826366, y: 0.30417523, z: 0.3041748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_Children: []
-  m_Father: {fileID: 470474135}
-  m_RootOrder: 6
+  m_Father: {fileID: 710220684}
+  m_RootOrder: 3
 --- !u!114 &1045167901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,8 +593,8 @@ Transform:
   m_LocalScale: {x: 0.10826345, y: 0.3041748, z: 0.3041748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 470474135}
-  m_RootOrder: 3
+  m_Father: {fileID: 710220684}
+  m_RootOrder: 0
 --- !u!23 &1308592251
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -600,6 +643,35 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1308592249}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!21 &1491278961
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Sprites/Default
+  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: PixelSnap
+      second: 0
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1622872475
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +684,7 @@ GameObject:
   - 136: {fileID: 1622872478}
   - 23: {fileID: 1622872477}
   - 114: {fileID: 1622872480}
+  - 54: {fileID: 1622872481}
   m_Layer: 0
   m_Name: Baton
   m_TagString: Untagged
@@ -668,7 +741,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1622872475}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -692,6 +765,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6118e5f919ecf004baacf2835f5da507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &1622872481
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1622872475}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1796293651
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,8 +809,8 @@ Transform:
   m_LocalScale: {x: 0.10826345, y: 0.3041748, z: 0.3041748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 470474135}
-  m_RootOrder: 4
+  m_Father: {fileID: 710220684}
+  m_RootOrder: 1
 --- !u!23 &1796293653
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -771,36 +859,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1796293651}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!21 &1884598284
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Sprites/Default
-  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-    - first:
-        name: _MainTex
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - first:
-        name: PixelSnap
-      second: 0
-    m_Colors:
-    - first:
-        name: _Color
-      second: {r: 1, g: 1, b: 1, a: 1}
---- !u!43 &2052207437
+--- !u!43 &2131298376
 Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
