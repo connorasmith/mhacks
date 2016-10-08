@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public class SongDriver : MonoBehaviour {
 
-    public string songName = "[Default Song Name]";
-    public AudioClip songAudio;
-    public int bpm = 120;
-    public int beatsInMeasure = 4;
-    public int noteGetsBeat = 4;
+    [System.Serializable]
+    public struct Song {
+        public string songName;
+        public AudioClip songAudio;
+        public int bpm;
+        public int beatsInMeasure;
+        public int noteGetsBeat;
+    }
+
+    public Song[] songs;
 
 	// Use this for initialization
 	void Start () {
