@@ -118,7 +118,7 @@ public class HitManager : MonoBehaviour {
 
         tutorialText.text = TUTORIAL_03;
 
-        int numberOfReps = 5;
+        int numberOfReps = 10;
 
         for(int i = 0; i < numberOfReps; i++) {
             yield return StartCoroutine(bottom.WaitForBatonTouch());
