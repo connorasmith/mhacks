@@ -134,6 +134,8 @@ public class HitManager : MonoBehaviour {
             yield return StartCoroutine(bottom.WaitForBatonTouch());
             audioSource.Play();
             yield return StartCoroutine(top.WaitForBatonTouch());
+            audioSource.Play();
+
         }
 
         tutorialText.text = TUTORIAL_04;
@@ -147,7 +149,7 @@ public class HitManager : MonoBehaviour {
 
         while(bottom.timesHit < hitThreshold || left.timesHit < hitThreshold || right.timesHit < hitThreshold || top.timesHit < hitThreshold || center.timesHit < hitThreshold) {
 
-            float beatsPerSecond = 30.0f;
+            float beatsPerSecond = 0.5f;
             float timeBetweenBeats = 1.0f / beatsPerSecond;
 
             bottom.ColorHit();
