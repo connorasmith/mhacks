@@ -21,6 +21,7 @@ public class SongDriver : MonoBehaviour {
     }
 
     public Song[] songs;
+    private int songIndex = 0;
 
     public Song activeSong;
 
@@ -43,7 +44,6 @@ public class SongDriver : MonoBehaviour {
         source = GetComponent<AudioSource>();
         activeSong = songs[0];
         source.clip = activeSong.songAudio;
-        source.Play();
 
     }
 
@@ -76,7 +76,6 @@ public class SongDriver : MonoBehaviour {
         string updatedString = string.Format(statusString, (int)GetAverageBPM(), activeSong.bpm, GetBPMRatio());
         bpmText.text = updatedString;
 
-
     }
 
     // When the player hits, force set the last bpm
@@ -84,6 +83,26 @@ public class SongDriver : MonoBehaviour {
 
         UpdateSongPitchByBPM();
         StartNewBeat();
+
+    }
+
+    public void StopAndReset() {
+
+        source.Stop();
+
+
+
+    }
+
+    public void PlayNextSong() {
+
+        for(int i = 0; i < numberOfBeatsToAverageAcross; i++) {
+
+            storedBeats.Enqueue(activeSong.bpm);
+
+        }
+
+        source.Play();
 
     }
 

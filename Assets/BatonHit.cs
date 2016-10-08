@@ -8,11 +8,24 @@ public class BatonHit : MonoBehaviour {
 
     private float hitColorDelay = 0.1f;
 
-	// Use this for initialization
-	void Start () {
+    private bool waiting = false;
+    private bool touched = false;
+
+    public Color panelColor;
+
+    public int timesHit = 0;
+
+    void Awake() {
 
         highlightMaterial = new Material(this.GetComponent<MeshRenderer>().material);
         GetComponent<MeshRenderer>().material = highlightMaterial;
+
+
+    }
+
+    // Use this for initialization
+    void Start () {
+
 
 	}
 	
@@ -26,30 +39,59 @@ public class BatonHit : MonoBehaviour {
 
         if (other.GetComponent<Baton>() && isBottom) {
 
+            if(waiting) {
+
+                Debug.LogWarning("TOUCHED!");
+                touched = true;
+
+            }
+
             SongDriver.instance.BeatHit();
 
         }
+
+
+
+        timesHit++;
     }
 
-    public IEnumerator FlashColor(Color hitColor) {
+    public IEnumerator FlashColor() {
 
         if(highlightMaterial != null) {
 
             Color prevColor = highlightMaterial.color;
 
-            highlightMaterial.SetColor("_Color", hitColor);
+            highlightMaterial.SetColor("_Color", panelColor);
 
             yield return new WaitForSeconds(hitColorDelay);
 
             highlightMaterial.SetColor("_Color", prevColor);
         }
+    }
+
+    public void ColorHit() {
+
+        StartCoroutine(FlashColor());
 
     }
 
-    public void ColorHit(Color hitColor) {
+    public IEnumerator WaitForBatonTouch() {
 
-        StartCoroutine(FlashColor(hitColor));
+        waiting = true;
 
+        Color prevColor = highlightMaterial.color;
+        highlightMaterial.SetColor("_Color", panelColor);
+        Debug.LogWarning("PANEL COLOR IS: " + panelColor);
+
+        while(!touched) {
+
+            yield return null;
+
+        }
+
+        highlightMaterial.SetColor("_Color", prevColor);
+
+        waiting = false;
+        touched = false;
     }
-
 }
