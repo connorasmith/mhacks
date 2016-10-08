@@ -30,8 +30,8 @@ public class HitManager : MonoBehaviour {
 	void Start () {
         audioSource = GetComponent<AudioSource>();
         beatsPerMeasure = SongDriver.instance.activeSong.beatsInMeasure;
-        StartCoroutine(highlightBeats());
-
+        //StartCoroutine(highlightBeats());
+        StartCoroutine(tutorialSequence());
         bottom.panelColor = Color.green;
         center.panelColor = Color.magenta;
         left.panelColor = Color.blue;
