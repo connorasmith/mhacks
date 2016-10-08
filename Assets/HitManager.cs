@@ -63,7 +63,7 @@ public class HitManager : MonoBehaviour {
 
             yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
 
-            if (beatsPerMeasure > 3) {
+            if(beatsPerMeasure > 3) {
 
                 left.ColorHit();
 
@@ -87,15 +87,100 @@ public class HitManager : MonoBehaviour {
 
         }
     }
-
     public IEnumerator tutorialSequence() {
 
-       tutorialText.text = TUTORIAL_START;
-       yield return StartCoroutine(bottom.WaitForBatonTouch());
-       tutorialText.text = TUTORIAL_01;
+        tutorialText.text = TUTORIAL_START;
         yield return StartCoroutine(bottom.WaitForBatonTouch());
+        audioSource.Play();
+        tutorialText.text = TUTORIAL_01;
+        yield return StartCoroutine(bottom.WaitForBatonTouch());
+        audioSource.Play();
         tutorialText.text = TUTORIAL_02;
 
+        bottom.timesHit = 0;
+
+        while(bottom.timesHit < 10) {
+
+            audioSource.clip = beat;
+
+            bottom.FlashColor();
+            audioSource.Play();
+
+            yield return new WaitForSeconds(1.5f);
+
+        }
+
+        tutorialText.text = TUTORIAL_03;
+
+        int numberOfReps = 5;
+
+        for(int i = 0; i < numberOfReps; i++) {
+            yield return StartCoroutine(bottom.WaitForBatonTouch());
+            audioSource.Play();
+            yield return StartCoroutine(center.WaitForBatonTouch());
+            audioSource.Play();
+            yield return StartCoroutine(bottom.WaitForBatonTouch());
+            audioSource.Play();
+            yield return StartCoroutine(left.WaitForBatonTouch());
+            audioSource.Play();
+            yield return StartCoroutine(bottom.WaitForBatonTouch());
+            audioSource.Play();
+            yield return StartCoroutine(right.WaitForBatonTouch());
+            audioSource.Play();
+            yield return StartCoroutine(bottom.WaitForBatonTouch());
+            audioSource.Play();
+            yield return StartCoroutine(top.WaitForBatonTouch());
+        }
+
+        tutorialText.text = TUTORIAL_04;
+
+        int hitThreshold = 5;
+        bottom.timesHit = 0;
+        left.timesHit = 0;
+        right.timesHit = 0;
+        top.timesHit = 0;
+        center.timesHit = 0;
+
+        while(bottom.timesHit < hitThreshold || left.timesHit < hitThreshold || right.timesHit < hitThreshold || top.timesHit < hitThreshold || center.timesHit < hitThreshold) {
+
+            float beatsPerSecond = 30.0f;
+            float timeBetweenBeats = 1.0f / beatsPerSecond;
+
+            bottom.ColorHit();
+
+            yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
+
+            center.ColorHit();
+
+            yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
+
+            bottom.ColorHit();
+
+            yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
+
+
+            left.ColorHit();
+
+            yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
+            bottom.ColorHit();
+
+            yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
+
+            right.ColorHit();
+
+            yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
+
+            bottom.ColorHit();
+
+            yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
+
+            top.ColorHit();
+
+            yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
+
+        }
+
+        tutorialText.text = TUTORIAL_05;
 
     }
 }

@@ -12,6 +12,8 @@ public class BatonHit : MonoBehaviour {
 
     public Color panelColor;
 
+    public int timesHit = 0;
+
 	// Use this for initialization
 	void Start () {
 
@@ -39,6 +41,8 @@ public class BatonHit : MonoBehaviour {
             touched = true;
 
         }
+
+        timesHit++;
     }
 
     public IEnumerator FlashColor() {
