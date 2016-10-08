@@ -57,7 +57,7 @@ public class SongDriver : MonoBehaviour {
 
         }
 
-        StartCoroutine(checkMissedBeats());
+    //    StartCoroutine(checkMissedBeats());
     }
 
     // Update is called once per frame

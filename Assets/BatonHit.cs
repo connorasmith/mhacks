@@ -39,7 +39,7 @@ public class BatonHit : MonoBehaviour {
 
         if (other.GetComponent<Baton>() && isBottom) {
 
-            if(waiting) {
+            if (waiting) {
 
                 Debug.LogWarning("TOUCHED!");
                 touched = true;
