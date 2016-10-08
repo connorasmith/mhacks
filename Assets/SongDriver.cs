@@ -43,6 +43,7 @@ public class SongDriver : MonoBehaviour {
         source = GetComponent<AudioSource>();
         activeSong = songs[0];
         source.clip = activeSong.songAudio;
+		source.Play ();
 
         storedBeats = new Queue<float>();
         for (int i = 0; i < numberOfBeatsToAverageAcross; i++) {
