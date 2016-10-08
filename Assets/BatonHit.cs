@@ -7,6 +7,11 @@ public class BatonHit : MonoBehaviour {
 
     private float hitColorDelay = 0.1f;
 
+    private bool waiting = false;
+    private bool touched = false;
+
+    public Color panelColor;
+
 	// Use this for initialization
 	void Start () {
 
@@ -28,27 +33,51 @@ public class BatonHit : MonoBehaviour {
             SongDriver.instance.BeatHit();
 
         }
+
+        if (waiting) {
+
+            touched = true;
+
+        }
     }
 
-    public IEnumerator FlashColor(Color hitColor) {
+    public IEnumerator FlashColor() {
 
         if(highlightMaterial != null) {
 
             Color prevColor = highlightMaterial.color;
 
-            highlightMaterial.SetColor("_Color", hitColor);
+            highlightMaterial.SetColor("_Color", panelColor);
 
             yield return new WaitForSeconds(hitColorDelay);
 
             highlightMaterial.SetColor("_Color", prevColor);
         }
+    }
+
+    public void ColorHit() {
+
+        StartCoroutine(FlashColor());
 
     }
 
-    public void ColorHit(Color hitColor) {
+    public IEnumerator WaitForBatonTouch() {
 
-        StartCoroutine(FlashColor(hitColor));
+        waiting = true;
 
+        Color prevColor = highlightMaterial.color;
+        highlightMaterial.SetColor("_Color", panelColor);
+
+
+        while(!touched) {
+
+            yield return null;
+
+        }
+
+        highlightMaterial.SetColor("_Color", prevColor);
+
+        waiting = false;
+        touched = false;
     }
-
 }
