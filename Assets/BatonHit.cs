@@ -12,4 +12,14 @@ public class BatonHit : MonoBehaviour {
 	void Update () {
 	
 	}
+
+
+    public void OnTriggerEnter(Collider other) {
+
+        if (other.GetComponent<Baton>()) {
+
+            SongDriver.instance.BeatHit();
+
+        }
+    }
 }
