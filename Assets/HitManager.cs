@@ -107,7 +107,7 @@ public class HitManager : MonoBehaviour {
 
             audioSource.clip = beat;
 
-            bottom.FlashColor();
+            bottom.ColorHit();
             audioSource.Play();
 
             yield return new WaitForSeconds(1.5f);
