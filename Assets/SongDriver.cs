@@ -48,6 +48,8 @@ public class SongDriver : MonoBehaviour {
 
     public void BeatHit() {
 
+		Debug.Log ("HIT");
+
         float playerBPM = 60.0f / timeSinceLastHit;
         float actualBPM = activeSong.bpm;
 
