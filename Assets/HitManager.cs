@@ -17,7 +17,7 @@ public class HitManager : MonoBehaviour {
 
     public Text tutorialText;
 
-    public const string TUTORIAL_START = "Welcome to Conduct VR! \n begin, move your baton to the green panel.";
+    public const string TUTORIAL_START = "Welcome to Conduct VR! \n To begin, move your baton to the green panel.";
     public const string TUTORIAL_01 = "Congrats! You just conducted your first beat! Try it one more time!";
     public const string TUTORIAL_02 = "Great! The bottom panel will be touched every beat of the song. \n Follow this beat!";
     public const string TUTORIAL_03 = "Good job! Now, for the other panels! \n Try touching the panels when they light up!";
@@ -50,8 +50,7 @@ public class HitManager : MonoBehaviour {
 
         if (Input.GetKeyDown("r")) {
 
-            StopAllCoroutines();
-            StartCoroutine(SongDriver.instance.waitForStart());
+            SongDriver.instance.StopAndReset();
 
         }
 	
@@ -164,7 +163,7 @@ public class HitManager : MonoBehaviour {
 
         tutorialText.text = TUTORIAL_07;
 
-        StartCoroutine(SongDriver.instance.waitForStart());
+        SongDriver.instance.PlayNextSong(false);
 
 
     }

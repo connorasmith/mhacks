@@ -84,7 +84,6 @@ public class BatonHit : MonoBehaviour {
 
         waiting = true;
         highlightMaterial.SetColor("_Color", panelColor);
-        Debug.LogWarning("PANEL COLOR IS: " + panelColor);
 
         while(!touched) {
 

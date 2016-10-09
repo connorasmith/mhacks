@@ -11,7 +11,10 @@ public class SongDriver : MonoBehaviour {
 
     public static SongDriver instance;
 
-    public float marginOfError = 15;
+    public Text songText;
+
+
+    public float marginOfError = 20;
 
     [System.Serializable]
     public struct Song {
@@ -25,13 +28,13 @@ public class SongDriver : MonoBehaviour {
     private bool songActive = false;
 
     public Song[] songs;
-    private int songIndex = 0;
+    private int songIndex = -1;
 
     public Song activeSong;
 
     public Text bpmText;
 
-    private const string statusString = "Your BPM: {0}\n Target BPM: {1}\n Relative Speed: x{2}";
+    private const string statusString = "Your BPM: {0}\n Target BPM: {1}";
 
     private AudioSource source;
 
@@ -75,7 +78,7 @@ public class SongDriver : MonoBehaviour {
 
     public void UpdateText() {
 
-        string updatedString = string.Format(statusString, (int)activeBPM, activeSong.bpm, GetBPMRatio());
+        string updatedString = string.Format(statusString, (int)activeBPM, activeSong.bpm);
         bpmText.text = updatedString;
 
     }
@@ -109,30 +112,39 @@ public class SongDriver : MonoBehaviour {
         }
     }
 
-    public void StopAndReset() {
+    public void StopAndReset(bool previous = false) {
 
         source.Stop();
         StopAllCoroutines();
+        hitManager.StopAllCoroutines();
         songActive = false;
-        StartCoroutine(waitForStart());
+        PlayNextSong(previous);
+
 
     }
 
-    public void PlayNextSong() {
+    public void PlayNextSong(bool previous) {
 
-        songIndex++;
 
-        if (songIndex >= songs.Length) {
-            songIndex = 0;
+        if(!previous) {
+
+            songIndex++;
+
+        }
+        else {
+            songIndex--;
         }
 
-        activeSong = songs[songIndex];
-        source.Play();
-        StartCoroutine(checkMissedBeats());
-        StartCoroutine(hitManager.highlightBeats());
-        StartCoroutine(lerpMusic());
-        songActive = true;
+        if(songIndex >= songs.Length) {
+            songIndex = 0;
+        }
+        if (songIndex < 0) {
+            songIndex = songs.Length - 1;
+        }
 
+        songText.text = "Current Song: " + songs[songIndex].songName;
+
+        StartCoroutine(waitForStart());
     }
 
     public IEnumerator checkMissedBeats() {
@@ -162,7 +174,16 @@ public class SongDriver : MonoBehaviour {
 
         yield return StartCoroutine(bottom.WaitForBatonTouch());
 
-        PlayNextSong();
+        StartCoroutine(checkMissedBeats());
+        StartCoroutine(hitManager.highlightBeats());
+        StartCoroutine(lerpMusic());
+
+         
+        activeSong = songs[songIndex];
+        source.clip = activeSong.songAudio;
+        source.Play();
+        songActive = true;
+
 
     }
 
