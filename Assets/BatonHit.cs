@@ -6,6 +6,8 @@ public class BatonHit : MonoBehaviour {
     private Material highlightMaterial;
     public bool isBottom;
 
+    private Color startColor;
+
     private float hitColorDelay = 0.1f;
 
     private bool waiting = false;
@@ -19,6 +21,7 @@ public class BatonHit : MonoBehaviour {
 
         highlightMaterial = new Material(this.GetComponent<MeshRenderer>().material);
         GetComponent<MeshRenderer>().material = highlightMaterial;
+        startColor = highlightMaterial.color;
 
 
     }
@@ -80,8 +83,6 @@ public class BatonHit : MonoBehaviour {
     public IEnumerator WaitForBatonTouch() {
 
         waiting = true;
-
-        Color prevColor = highlightMaterial.color;
         highlightMaterial.SetColor("_Color", panelColor);
         Debug.LogWarning("PANEL COLOR IS: " + panelColor);
 
@@ -91,7 +92,7 @@ public class BatonHit : MonoBehaviour {
 
         }
 
-        highlightMaterial.SetColor("_Color", prevColor);
+        highlightMaterial.SetColor("_Color", startColor);
 
         waiting = false;
         touched = false;

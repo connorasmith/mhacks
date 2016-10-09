@@ -41,10 +41,19 @@ public class HitManager : MonoBehaviour {
 
         StartCoroutine(tutorialSequence());
 
+        beat.LoadAudioData();
+
     }
 
     // Update is called once per frame
     void Update () {
+
+        if (Input.GetKeyDown("r")) {
+
+            StopAllCoroutines();
+            StartCoroutine(SongDriver.instance.waitForStart());
+
+        }
 	
 	}
 
@@ -67,7 +76,7 @@ public class HitManager : MonoBehaviour {
 
             yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
 
-            if(beatsPerMeasure > 3) {
+            if (beatsPerMeasure > 3) {
 
                 left.ColorHit();
 
@@ -94,6 +103,7 @@ public class HitManager : MonoBehaviour {
     public IEnumerator tutorialSequence() {
 
         audioSource.clip = beat;
+        audioSource.Play();
 
         tutorialText.text = TUTORIAL_START;
         yield return StartCoroutine(bottom.WaitForBatonTouch());
@@ -112,7 +122,7 @@ public class HitManager : MonoBehaviour {
 
             audioSource.Play();
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1.0f);
 
         }
 
@@ -142,7 +152,26 @@ public class HitManager : MonoBehaviour {
 
         tutorialText.text = TUTORIAL_04;
 
-        int hitThreshold = 5;
+        yield return StartCoroutine(playUntilThreshold(7, 0.75f));
+
+        tutorialText.text = TUTORIAL_05;
+
+        yield return StartCoroutine(playUntilThreshold(10, 1.0f));
+
+        tutorialText.text = TUTORIAL_06;
+
+        yield return StartCoroutine(playUntilThreshold(15, 2.0f));
+
+        tutorialText.text = TUTORIAL_07;
+
+        StartCoroutine(SongDriver.instance.waitForStart());
+
+
+    }
+
+    public IEnumerator playUntilThreshold(int threshold, float bps) {
+
+        int hitThreshold = threshold;
         bottom.timesHit = 0;
         left.timesHit = 0;
         right.timesHit = 0;
@@ -151,7 +180,7 @@ public class HitManager : MonoBehaviour {
 
         while(bottom.timesHit < hitThreshold || left.timesHit < hitThreshold || right.timesHit < hitThreshold || top.timesHit < hitThreshold || center.timesHit < hitThreshold) {
 
-            float beatsPerSecond = 0.5f;
+            float beatsPerSecond = bps;
             float timeBetweenBeats = 1.0f / beatsPerSecond;
 
             bottom.ColorHit();
@@ -169,9 +198,7 @@ public class HitManager : MonoBehaviour {
             bottom.ColorHit();
             audioSource.Play();
 
-
             yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
-
 
             left.ColorHit();
             audioSource.Play();
@@ -201,10 +228,6 @@ public class HitManager : MonoBehaviour {
 
 
             yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
-
         }
-
-        tutorialText.text = TUTORIAL_05;
-
     }
 }
