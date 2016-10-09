@@ -151,11 +151,11 @@ public class HitManager : MonoBehaviour {
 
         tutorialText.text = TUTORIAL_04;
 
-        yield return StartCoroutine(playUntilThreshold(7, 0.75f));
+        yield return StartCoroutine(playUntilThreshold(5, 0.75f));
 
         tutorialText.text = TUTORIAL_05;
 
-        yield return StartCoroutine(playUntilThreshold(10, 1.0f));
+        yield return StartCoroutine(playUntilThreshold(7, 1.0f));
 
         tutorialText.text = TUTORIAL_06;
 
