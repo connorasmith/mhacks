@@ -163,6 +163,8 @@ public class HitManager : MonoBehaviour {
 
         tutorialText.text = TUTORIAL_07;
 
+        yield return new WaitForSeconds(5.0f);
+
         SongDriver.instance.PlayNextSong(false);
 
 
