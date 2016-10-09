@@ -6,10 +6,12 @@ using UnityEngine.UI;
 [System.Serializable]
 public class SongDriver : MonoBehaviour {
 
+    public BatonHit bottom;
+    public HitManager hitManager;
+
     public static SongDriver instance;
 
-    private Queue<float> storedBeats;
-    public int numberOfBeatsToAverageAcross;
+    public float marginOfError = 15;
 
     [System.Serializable]
     public struct Song {
@@ -19,6 +21,8 @@ public class SongDriver : MonoBehaviour {
         public int beatsInMeasure;
         public int noteGetsBeat;
     }
+
+    private bool songActive = false;
 
     public Song[] songs;
     private int songIndex = 0;
@@ -35,6 +39,8 @@ public class SongDriver : MonoBehaviour {
 
     private float activeBPM;
 
+    private float roundedBPM;
+
     public void Awake() {
 
         if (SongDriver.instance == null) {
@@ -50,30 +56,26 @@ public class SongDriver : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        storedBeats = new Queue<float>();
-        for (int i = 0; i < numberOfBeatsToAverageAcross; i++) {
-
-            storedBeats.Enqueue(activeSong.bpm);
-
-        }
-
-        StartCoroutine(checkMissedBeats());
     }
 
     // Update is called once per frame
     void Update() {
 
-        // Calculate time passed since the last baton hit.
-        timeSinceLastHit += Time.deltaTime;
+        if (songActive) {
+            // Calculate time passed since the last baton hit.
+            timeSinceLastHit += Time.deltaTime;
 
-        activeBPM = 60.0f / timeSinceLastHit;
+            UpdateText();
 
-        UpdateText();
-	}
+            if (!source.isPlaying) {
+                StopAndReset();
+            }
+        }
+    }
 
     public void UpdateText() {
 
-        string updatedString = string.Format(statusString, (int)GetAverageBPM(), activeSong.bpm, GetBPMRatio());
+        string updatedString = string.Format(statusString, (int)activeBPM, activeSong.bpm, GetBPMRatio());
         bpmText.text = updatedString;
 
     }
@@ -81,63 +83,92 @@ public class SongDriver : MonoBehaviour {
     // When the player hits, force set the last bpm
     public void BeatHit() {
 
-        UpdateSongPitchByBPM();
+        float bps = 1 / timeSinceLastHit;
+
+        activeBPM = bps * 60;
+
+        RoundBPM();
+
+        Debug.LogWarningFormat("HIT! {0} seconds since last hit, which is a BPM of {1}", timeSinceLastHit, activeBPM);
+
         StartNewBeat();
 
+    }
+
+    public void RoundBPM() {
+
+        float actualBPM = activeSong.bpm;
+
+        if (activeBPM >= actualBPM - marginOfError && activeBPM <= actualBPM + marginOfError) {
+
+            roundedBPM = actualBPM;
+
+        }
+        else {
+
+            roundedBPM = activeBPM;
+
+        }
     }
 
     public void StopAndReset() {
 
         source.Stop();
-
-
+        StopAllCoroutines();
+        songActive = false;
+        StartCoroutine(waitForStart());
 
     }
 
     public void PlayNextSong() {
 
-        for(int i = 0; i < numberOfBeatsToAverageAcross; i++) {
+        songIndex++;
 
-            storedBeats.Enqueue(activeSong.bpm);
-
+        if (songIndex >= songs.Length) {
+            songIndex = 0;
         }
 
+        activeSong = songs[songIndex];
         source.Play();
+        StartCoroutine(checkMissedBeats());
+        StartCoroutine(hitManager.highlightBeats());
+        StartCoroutine(lerpMusic());
+        songActive = true;
 
     }
 
     public IEnumerator checkMissedBeats() {
 
-        while(true) {
+        while (true) {
 
             // THis is what the song's BPM SHOULD be.
             float actualBPM = activeSong.bpm;
 
-            // If at any point the player's BPM is slower (i.e. they missed a hit)
-            if(activeBPM < actualBPM) {
+            float bps = 1 / timeSinceLastHit;
 
-                storedBeats.Dequeue();
-                storedBeats.Enqueue(activeBPM);
+            float bpm = bps * 60.0f;
 
-                yield return new WaitForSeconds(1.0f);
+            if (bpm < actualBPM) {
+
+                activeBPM = bpm;
+
+                RoundBPM();
 
             }
 
             yield return null;
         }
     }
+    
+    public IEnumerator waitForStart() {
 
-    public void UpdateSongPitchByBPM() {
+        yield return StartCoroutine(bottom.WaitForBatonTouch());
 
-        float averageBPM = GetAverageBPM();
-
-        source.pitch = averageBPM / activeSong.bpm;
+        PlayNextSong();
 
     }
 
     public void StartNewBeat() {
-        storedBeats.Dequeue();
-        storedBeats.Enqueue(activeBPM);
 
         // Reset the time since the last hit
         timeSinceLastHit = 0.0f;
@@ -148,7 +179,7 @@ public class SongDriver : MonoBehaviour {
     public float GetBPMRatio() {
 
         // Calculate player BPM on the hit
-        float playerBPM = GetAverageBPM();
+        float playerBPM = activeBPM;
         float actualBPM = activeSong.bpm;
 
         float bpmRatio = playerBPM / actualBPM;
@@ -157,19 +188,37 @@ public class SongDriver : MonoBehaviour {
 
     }
     
-    public float GetAverageBPM() {
 
-        float totalBPM = 0.0f;
+    public IEnumerator lerpMusic() {
 
-        foreach (float bpm in storedBeats) {
+        while (true) {
 
-            totalBPM += bpm;
+            float currentPitch = source.pitch;
+            float bpmPitch = (activeBPM / activeSong.bpm);
+
+            if(roundedBPM >= activeSong.bpm - marginOfError && roundedBPM <= activeSong.bpm + marginOfError) {
+
+                source.pitch = 1;
+
+            }
+
+            else {
+
+                for(float i = 0.0f; i < 0.4f; i += Time.deltaTime) {
+
+                    if(roundedBPM >= activeSong.bpm - marginOfError && roundedBPM <= activeSong.bpm + marginOfError) {
+
+                        break;
+
+                    }
+
+                    source.pitch = Mathf.Lerp(currentPitch, bpmPitch, i);
+
+                }
+            }
+
+            yield return null;
 
         }
-
-        totalBPM /= (numberOfBeatsToAverageAcross);
-
-        return totalBPM;
-
     }
 }
