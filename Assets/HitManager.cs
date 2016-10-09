@@ -17,11 +17,11 @@ public class HitManager : MonoBehaviour {
 
     public Text tutorialText;
 
-    public const string TUTORIAL_START = "Welcome to Conduct VR! \n To begin, move your baton to the green panel.";
+    public const string TUTORIAL_START = "Welcome to Vivace! \n To begin, move your baton to the green panel.";
     public const string TUTORIAL_01 = "Congrats! You just conducted your first beat! Try it one more time!";
     public const string TUTORIAL_02 = "Great! The bottom panel will be touched every beat of the song. \n Follow this beat!";
     public const string TUTORIAL_03 = "Good job! Now, for the other panels! \n Try touching the panels when they light up!";
-    public const string TUTORIAL_04 = "Nicely done! This is how you conduct a regular song! \n Now try it with this slow beat!";
+    public const string TUTORIAL_04 = "Nicely done! This is how you conduct a song! \n Now try it with this slow beat!";
     public const string TUTORIAL_05 = "Let's go a little faster!";
     public const string TUTORIAL_06 = "Even faster!";
     public const string TUTORIAL_07 = "Great! You're ready for your first song! \n The song will only play correctly if you stay on beat!";
