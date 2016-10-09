@@ -37,16 +37,18 @@ public class BatonHit : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other) {
 
-        if (other.GetComponent<Baton>() && isBottom) {
-
-            if(waiting) {
+        if (other.GetComponent<Baton>()) {
+           
+            if (waiting) {
 
                 Debug.LogWarning("TOUCHED!");
                 touched = true;
 
             }
 
-            SongDriver.instance.BeatHit();
+            if(isBottom) {
+                SongDriver.instance.BeatHit();
+            }
 
         }
 

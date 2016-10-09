@@ -93,6 +93,8 @@ public class HitManager : MonoBehaviour {
     }
     public IEnumerator tutorialSequence() {
 
+        audioSource.clip = beat;
+
         tutorialText.text = TUTORIAL_START;
         yield return StartCoroutine(bottom.WaitForBatonTouch());
         audioSource.Play();
@@ -103,11 +105,11 @@ public class HitManager : MonoBehaviour {
 
         bottom.timesHit = 0;
 
+
         while(bottom.timesHit < 10) {
 
-            audioSource.clip = beat;
+            bottom.ColorHit();
 
-            bottom.FlashColor();
             audioSource.Play();
 
             yield return new WaitForSeconds(1.5f);
@@ -116,7 +118,7 @@ public class HitManager : MonoBehaviour {
 
         tutorialText.text = TUTORIAL_03;
 
-        int numberOfReps = 5;
+        int numberOfReps = 10;
 
         for(int i = 0; i < numberOfReps; i++) {
             yield return StartCoroutine(bottom.WaitForBatonTouch());
@@ -134,6 +136,8 @@ public class HitManager : MonoBehaviour {
             yield return StartCoroutine(bottom.WaitForBatonTouch());
             audioSource.Play();
             yield return StartCoroutine(top.WaitForBatonTouch());
+            audioSource.Play();
+
         }
 
         tutorialText.text = TUTORIAL_04;
@@ -147,38 +151,54 @@ public class HitManager : MonoBehaviour {
 
         while(bottom.timesHit < hitThreshold || left.timesHit < hitThreshold || right.timesHit < hitThreshold || top.timesHit < hitThreshold || center.timesHit < hitThreshold) {
 
-            float beatsPerSecond = 30.0f;
+            float beatsPerSecond = 0.5f;
             float timeBetweenBeats = 1.0f / beatsPerSecond;
 
             bottom.ColorHit();
+            audioSource.Play();
+
 
             yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
 
             center.ColorHit();
+            audioSource.Play();
+
 
             yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
 
             bottom.ColorHit();
+            audioSource.Play();
+
 
             yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
 
 
             left.ColorHit();
+            audioSource.Play();
+
 
             yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
             bottom.ColorHit();
+            audioSource.Play();
+
 
             yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
 
             right.ColorHit();
+            audioSource.Play();
+
 
             yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
 
             bottom.ColorHit();
+            audioSource.Play();
+
 
             yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
 
             top.ColorHit();
+            audioSource.Play();
+
 
             yield return new WaitForSeconds(timeBetweenBeats / 2.0f);
 
