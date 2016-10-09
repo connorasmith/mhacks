@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: cb4f2413ed906aa40a7d96b08c43d4d1
-timeCreated: 1475959832
+guid: 7c67c5767be3cdb4f99597d10f0f7d86
+timeCreated: 1475981266
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -14,20 +14,36 @@ ModelImporter:
     100012: pCylinder1
     100014: pCylinder4
     100016: pCylinder5
-    100018: pCylinder7
+    100018: pCylinder8
     100020: pSphere1
-    100022: pSphere2
-    100024: pSphere3
-    100026: transform1
-    100028: transform10
-    100030: transform2
-    100032: transform3
-    100034: transform4
-    100036: transform5
-    100038: transform6
-    100040: transform7
-    100042: transform8
-    100044: transform9
+    100022: pSphere10
+    100024: pSphere12
+    100026: pSphere13
+    100028: pSphere2
+    100030: pSphere3
+    100032: pSphere4
+    100034: pSphere5
+    100036: pSphere6
+    100038: pSphere7
+    100040: pSphere9
+    100042: transform1
+    100044: transform10
+    100046: transform11
+    100048: transform12
+    100050: transform13
+    100052: transform14
+    100054: transform15
+    100056: transform16
+    100058: transform17
+    100060: transform18
+    100062: transform2
+    100064: transform3
+    100066: transform4
+    100068: transform5
+    100070: transform6
+    100072: transform7
+    100074: transform8
+    100076: transform9
     400000: //RootNode
     400002: pCube2
     400004: pCube3
@@ -37,26 +53,42 @@ ModelImporter:
     400012: pCylinder1
     400014: pCylinder4
     400016: pCylinder5
-    400018: pCylinder7
+    400018: pCylinder8
     400020: pSphere1
-    400022: pSphere2
-    400024: pSphere3
-    400026: transform1
-    400028: transform10
-    400030: transform2
-    400032: transform3
-    400034: transform4
-    400036: transform5
-    400038: transform6
-    400040: transform7
-    400042: transform8
-    400044: transform9
+    400022: pSphere10
+    400024: pSphere12
+    400026: pSphere13
+    400028: pSphere2
+    400030: pSphere3
+    400032: pSphere4
+    400034: pSphere5
+    400036: pSphere6
+    400038: pSphere7
+    400040: pSphere9
+    400042: transform1
+    400044: transform10
+    400046: transform11
+    400048: transform12
+    400050: transform13
+    400052: transform14
+    400054: transform15
+    400056: transform16
+    400058: transform17
+    400060: transform18
+    400062: transform2
+    400064: transform3
+    400066: transform4
+    400068: transform5
+    400070: transform6
+    400072: transform7
+    400074: transform8
+    400076: transform9
     2300000: pCube9
-    2300002: pCylinder7
+    2300002: pSphere13
     3300000: pCube9
-    3300002: pCylinder7
-    4300000: pCylinder7
-    4300002: pCube9
+    3300002: pSphere13
+    4300000: pCube9
+    4300002: pSphere13
     7400000: Take 001
     9500000: //RootNode
   materials:
