@@ -7,15 +7,27 @@ public class MoveBookScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
-        RectTransform bookRect = GetComponent<RectTransform>();
+		StartCoroutine (setBookTransform());
 
-        bookRect.position = newBookPos;
-       // bookRect.localScale = newBookScale;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+	
+	}
+
+	public IEnumerator setBookTransform() {
+		Debug.Log ("set book start\n");
+		yield return new WaitForSeconds (2.0f);
+		Debug.Log ("set book after wait\n");
+
+		GetComponent<Canvas> ().renderMode = RenderMode.WorldSpace;
+		RectTransform bookRect = GetComponent<RectTransform> ();
+
+		bookRect.position = newBookPos;
+		bookRect.localScale = newBookScale;
+
+		Debug.Log ("set book end\n");
 	
 	}
 }
