@@ -89,8 +89,6 @@ public class SongDriver : MonoBehaviour {
 
         RoundBPM();
 
-        Debug.LogWarningFormat("HIT! {0} seconds since last hit, which is a BPM of {1}", timeSinceLastHit, activeBPM);
-
         StartNewBeat();
 
     }
